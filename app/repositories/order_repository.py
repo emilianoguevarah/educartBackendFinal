@@ -2,6 +2,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import exc
 from typing import Optional, List
+from sqlalchemy import func, extract
+from datetime import datetime
 
 from app.models.order import Order
 from app.models.order_item import OrderItem
@@ -15,6 +17,23 @@ class OrderRepository:
         """Recupera una orden por su ID."""
         return self.db.query(Order).get(order_id)
 
+    def get_monthly_sales_total(self) -> float:
+        """
+        Suma el total_amount de las ordenes del mes en curso.
+        Igual que en ProductRepository, la suma la hace la base de datos.
+        """
+        now = datetime.utcnow()
+        total = (
+            self.db.query(func.coalesce(func.sum(Order.total_amount), 0.0))
+            .filter(extract('year', Order.order_date) == now.year)
+            .filter(extract('month', Order.order_date) == now.month)
+            .scalar()
+        )
+        return float(total)
+
+    def count_pending_orders(self) -> int:
+        return self.db.query(Order).filter(Order.status == "Pending").count()
+    
     def create_order_transaction(
         self, 
         user_id: int, 

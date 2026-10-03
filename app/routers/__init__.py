@@ -6,3 +6,4 @@ from .cart_item_router import cart_item_router
 from .auth_router import auth_router
 from .cart_router import cart_router
 from .order_router import order_router
+from .dashboard_router import dashboard_router

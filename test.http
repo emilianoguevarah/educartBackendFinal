@@ -1,6 +1,4 @@
-# EduCart API Requests
-# Usa este archivo con la extensión REST Client de VS Code para probar los endpoints.
-# Configura las variables de entorno básicas según tu entorno local.
+
 
 @base_url = http://127.0.0.1:8000
 @user_token = PON_AQUI_UN_TOKEN_DE_USUARIO
@@ -26,15 +24,15 @@ POST {{base_url}}/auth/register
 Content-Type: application/json
 
 {
-  "name": "Alex Cruz",
-  "username": "alex",
-  "email": "alexbleiz4335@gmail.com",
+  "name": "Emiliano",
+  "username": "toro",
+  "email": "emilianoguevara@gmail.com",
   "password": "123456789",
   "role": "admin"
 }
 
 ###
-# 🔐 Login (devuelve token JWT)
+# Login (devuelve token JWT)
 POST {{base_url}}/auth/login
 Content-Type: application/json
 
@@ -44,13 +42,13 @@ Content-Type: application/json
 }
 
 ###
-# 🔍 Perfil del usuario autenticado
+#  Perfil del usuario autenticado
 GET {{base_url}}/auth/me
 Authorization: Bearer {{user_token}}
 Accept: application/json
 
 ###
-# ✏️ Actualizar perfil
+#  Actualizar perfil
 PATCH {{base_url}}/auth/me
 Authorization: Bearer {{user_token}}
 Content-Type: application/json
@@ -65,17 +63,17 @@ Content-Type: application/json
 ############################################################
 
 ###
-# 🏷️ Listar categorías
+#  Listar categorías
 GET {{base_url}}/categories/
 Accept: application/json
 
 ###
-# 📄 Obtener categoría por ID
+#  Obtener categoría por ID
 GET {{base_url}}/categories/1
 Accept: application/json
 
 ###
-# ➕ Crear categoría (admin)
+#  Crear categoría (admin)
 POST {{base_url}}/categories/
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
@@ -86,7 +84,7 @@ Content-Type: application/json
 }
 
 ###
-# ✏️ Actualizar categoría (admin)
+#  Actualizar categoría (admin)
 PUT {{base_url}}/categories/1
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
@@ -97,7 +95,7 @@ Content-Type: application/json
 }
 
 ###
-# 🗑️ Eliminar categoría (admin)
+#  Eliminar categoría (admin)
 DELETE {{base_url}}/categories/1
 Authorization: Bearer {{admin_token}}
 
@@ -106,17 +104,17 @@ Authorization: Bearer {{admin_token}}
 ############################################################
 
 ###
-# 🛍️ Listar productos con filtros opcionales
+#  Listar productos con filtros opcionales
 GET {{base_url}}/products/?categories=Papelería&price_min=10&price_max=200&sort_by=price&order=asc
 Accept: application/json
 
 ###
-# 🔍 Obtener producto por ID
+#  Obtener producto por ID
 GET {{base_url}}/products/1
 Accept: application/json
 
 ###
-# ➕ Crear producto (admin)
+#  Crear producto (admin)
 POST {{base_url}}/products/
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
@@ -134,7 +132,7 @@ Content-Type: application/json
 }
 
 ###
-# ✏️ Actualizar producto (admin)
+#  Actualizar producto (admin)
 PATCH {{base_url}}/products/1
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
@@ -145,7 +143,7 @@ Content-Type: application/json
 }
 
 ###
-# 🗑️ Eliminar producto (admin)
+#  Eliminar producto (admin)
 DELETE {{base_url}}/products/1
 Authorization: Bearer {{admin_token}}
 
@@ -154,13 +152,13 @@ Authorization: Bearer {{admin_token}}
 ############################################################
 
 ###
-# 🛒 Obtener carrito del usuario autenticado
+#  Obtener carrito del usuario autenticado
 GET {{base_url}}/cart/
 Authorization: Bearer {{user_token}}
 Accept: application/json
 
 ###
-# ➕ Agregar producto al carrito
+#  Agregar producto al carrito
 POST {{base_url}}/cart/
 Authorization: Bearer {{user_token}}
 Content-Type: application/json
@@ -171,7 +169,7 @@ Content-Type: application/json
 }
 
 ###
-# 🔄 Actualizar cantidad de un producto
+#  Actualizar cantidad de un producto
 PUT {{base_url}}/cart/
 Authorization: Bearer {{user_token}}
 Content-Type: application/json
@@ -182,12 +180,12 @@ Content-Type: application/json
 }
 
 ###
-# 🗑️ Eliminar un producto del carrito
+#  Eliminar un producto del carrito
 DELETE {{base_url}}/cart/items/1
 Authorization: Bearer {{user_token}}
 
 ###
-# 🧹 Vaciar carrito
+#  Vaciar carrito
 DELETE {{base_url}}/cart/
 Authorization: Bearer {{user_token}}
 
@@ -196,7 +194,7 @@ Authorization: Bearer {{user_token}}
 ############################################################
 
 ###
-# 🆕 Crear una orden (checkout)
+#  Crear una orden (checkout)
 POST {{base_url}}/orders/
 Authorization: Bearer {{user_token}}
 Content-Type: application/json
@@ -207,19 +205,19 @@ Content-Type: application/json
 }
 
 ###
-# 📜 Historial de órdenes del usuario
+#  Historial de órdenes del usuario
 GET {{base_url}}/orders/my-orders
 Authorization: Bearer {{user_token}}
 Accept: application/json
 
 ###
-# 📜 Todas las órdenes (admin)
+#  Todas las órdenes (admin)
 GET {{base_url}}/orders/admin/all
 Authorization: Bearer {{admin_token}}
 Accept: application/json
 
 ###
-# 🚚 Actualizar estado de una orden
+#  Actualizar estado de una orden
 PATCH {{base_url}}/orders/1/status
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json

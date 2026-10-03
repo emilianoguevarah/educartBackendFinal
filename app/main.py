@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import Base, engine
-from .routers import order_router, product_router, category_router, cart_item_router, health_router, auth_router, cart_router
+from .routers import order_router, product_router, category_router, cart_item_router, health_router, auth_router, cart_router,  dashboard_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -30,6 +30,7 @@ app.include_router(category_router)
 app.include_router(cart_router)
 app.include_router(cart_item_router)
 app.include_router(order_router)
+app.include_router(dashboard_router)
 
 
 

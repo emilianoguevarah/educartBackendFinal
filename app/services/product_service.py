@@ -12,14 +12,13 @@ class ProductService:
         """
         Llama al repositorio aplicando los filtros recibidos del router.
         """
-        # Convertimos los filtros del esquema a argumentos simples para el repo
         return self.repository.list_filtered(
             category=filters.categories[0] if filters.categories else None,
             min_price=filters.price_min,
             max_price=filters.price_max,
+            search=filters.search,
             sort_by=filters.sort_by,
-            order=filters.order
-            # search=filters.search # Si agregamos busqueda
+            order=filters.order,
         )
 
     def get_product_by_id(self, product_id: int) -> Optional[Product]:
@@ -33,3 +32,6 @@ class ProductService:
 
     def delete_product(self, product_id: int) -> bool:
         return self.repository.delete(product_id)
+    
+    def get_low_stock_products(self):
+        return self.repository.list_low_stock()

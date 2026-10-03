@@ -4,6 +4,7 @@ from sqlalchemy import asc, desc
 from app.models.product import Product
 from app.models.category import Category
 from app.schemas.product import ProductCreate, ProductUpdate
+from sqlalchemy import func
 
 class ProductRepository:
     def __init__(self, db: Session):
@@ -18,6 +19,23 @@ class ProductRepository:
         """
         return self.db.query(Product).filter(Product.id == product_id).with_for_update().first()
 
+    def list_low_stock(self) -> List[Product]:
+        """
+        Devuelve los productos en estado Alerta o Agotado
+        (stock_current <= stock_min). Usado para el dashboard de alertas.
+        """
+        return self.db.query(Product).filter(Product.stock_current <= Product.stock_min).all()
+
+    def count_low_stock(self) -> int:
+        return self.db.query(Product).filter(Product.stock_current <= Product.stock_min).count()
+
+    def get_inventory_value(self) -> float:
+        """
+        Calcula el valor total del inventario (precio * stock) directamente
+        en la base de datos, en vez de traer todo a Python y sumar ahí.
+        """"""el coalesce es solo para que devuelva 0.0 en vez de None si no hay productos todavía"""
+        total = self.db.query(func.coalesce(func.sum(Product.price * Product.stock_current), 0.0)).scalar()
+        return float(total)
     def list_filtered(
         self, 
         category: Optional[str] = None, 
